@@ -1,3 +1,10 @@
+const readline = require('readline');
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+});
+
 const getUserChoice = (userInput) => {
     userInput = userInput.toLowerCase();
     if (userInput === 'rock' || userInput === 'paper' || userInput === 'scissors' || userInput === 'bomb') {
@@ -50,11 +57,18 @@ const getUserChoice = (userInput) => {
   };
   
   const playGame = () => {
-    const userChoice = getUserChoice(prompt('Please choose rock, paper or scissors.'));
-    const computerChoice = getComputerChoice();
-    console.log(`You chose: ${userChoice}`);
-    console.log(`The computer chose: ${computerChoice}`);
-    console.log(determineWinner(userChoice, computerChoice));
+    rl.question('Choose rock, paper, or scissors: ', (answer) => {
+      const userChoice = getUserChoice(answer);
+      if (!userChoice) {
+        rl.close();
+        return;
+      }
+      const computerChoice = getComputerChoice();
+      console.log(`You chose: ${userChoice}`);
+      console.log(`The computer chose: ${computerChoice}`);
+      console.log(determineWinner(userChoice, computerChoice));
+      rl.close();
+    });
   };
   
   playGame();
