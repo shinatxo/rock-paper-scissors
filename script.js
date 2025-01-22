@@ -1,20 +1,4 @@
-const readline = require('readline');
-
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-});
-
-const getUserChoice = (userInput) => {
-    userInput = userInput.toLowerCase();
-    if (userInput === 'rock' || userInput === 'paper' || userInput === 'scissors' || userInput === 'bomb') {
-      return userInput;
-    } else {
-      console.log('Error: invalid choice. Please choose rock, paper or scissors.');
-    }
-  };
-  
-  const getComputerChoice = () => {
+const getComputerChoice = () => {
     const randomNumber = Math.floor(Math.random() * 3);
     switch (randomNumber) {
       case 0:
@@ -27,48 +11,36 @@ const getUserChoice = (userInput) => {
   };
   
   const determineWinner = (userChoice, computerChoice) => {
-    if (userChoice === 'bomb') {
-      return 'You used the secret cheat code! You win!';
-    }
     if (userChoice === computerChoice) {
-      return 'The game is a tie!';
-    } 
-    if (userChoice === 'rock') {
-      if (computerChoice === 'paper') {
-        return 'The computer won!';
-      } else {
-        return 'You won!';
-      }
+      return 'It\'s a tie!';
     }
-    if (userChoice === 'paper') {
-      if (computerChoice === 'scissors') {
-        return 'The computer won!';
-      } else {
-        return 'You won!';
-      }
+    if (
+      (userChoice === 'rock' && computerChoice === 'scissors') ||
+      (userChoice === 'paper' && computerChoice === 'rock') ||
+      (userChoice === 'scissors' && computerChoice === 'paper')
+    ) {
+      return 'You won!';
     }
-    if (userChoice === 'scissors') {
-      if (computerChoice === 'rock') {
-        return 'The computer won!';
-      } else {
-        return 'You won!';
-      }
-    }
+    return 'The computer won!';
   };
   
-  const playGame = () => {
-    rl.question('Choose rock, paper, or scissors: ', (answer) => {
-      const userChoice = getUserChoice(answer);
-      if (!userChoice) {
-        rl.close();
-        return;
-      }
-      const computerChoice = getComputerChoice();
-      console.log(`You chose: ${userChoice}`);
-      console.log(`The computer chose: ${computerChoice}`);
-      console.log(determineWinner(userChoice, computerChoice));
-      rl.close();
+  document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('.choice');
+    const userChoiceElement = document.getElementById('user-choice');
+    const computerChoiceElement = document.getElementById('computer-choice');
+    const winnerElement = document.getElementById('winner');
+  
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        const userChoice = button.id;
+        const computerChoice = getComputerChoice();
+        const result = determineWinner(userChoice, computerChoice);
+  
+        // Update the UI
+        userChoiceElement.querySelector('span').textContent = userChoice;
+        computerChoiceElement.querySelector('span').textContent = computerChoice;
+        winnerElement.querySelector('span').textContent = result;
+      });
     });
-  };
+  });
   
-  playGame();
