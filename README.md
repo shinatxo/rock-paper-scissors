@@ -24,3 +24,9 @@ Welcome to the **Rock, Paper, Scissors** game! This project is a simple browser-
 1. Clone the repository:
    ```bash
    git clone https://github.com/shinatxo/rock-paper-scissors.git
+
+2. Navigate to the project directory:
+   ```bash
+   cd rock-paper-scissors
+
+3. Open index.html in your browser to play the game locally.
